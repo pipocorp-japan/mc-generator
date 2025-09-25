@@ -1,89 +1,148 @@
 {
-  "com.apple.webClip.managed": {
-    "name": "Webクリップ",
-    "description": "Webサイトへのショートカットをホーム画面に作成します。",
-    "fields": [
-      { "key": "Label", "label": "アイコンのラベル", "type": "text", "placeholder": "例: ChatGPT", "required": true, "description": "ホーム画面に表示される名前です。" },
-      { "key": "URL", "label": "WebサイトのURL", "type": "url", "placeholder": "https://chat.openai.com/", "required": true, "description": "アイコンをタップした時に開くURL。" },
-      { "key": "IsRemovable", "label": "ユーザーによる削除を許可", "type": "checkbox", "checked": true, "description": "チェックを外すと、このWebクリップを削除できなくなります。" },
-      { "key": "FullScreen", "label": "フルスクリーンで開く", "type": "checkbox", "description": "SafariのUIを隠し、アプリのように表示します。" },
-      { "key": "Icon", "label": "アイコン画像 (PNG)", "type": "file", "isBase64": true, "description": "正方形のPNG画像が推奨されます。" }
-    ]
-  },
-  "com.apple.wallpaper": {
-    "name": "壁紙",
-    "description": "ホーム画面やロック画面の壁紙を設定します。画像ファイルが必要です。",
-    "fields": [
-        { "key": "Image", "label": "壁紙画像 (JPG, PNG)", "type": "file", "isBase64": true, "required": true, "description": "デバイスに設定したい画像ファイルを選択します。" },
-        { "key": "Where", "label": "設定する場所", "type": "select", "options": ["Both", "Home Screen", "Lock Screen"], "description": "壁紙をホーム画面、ロック画面、またはその両方に設定するか選びます。" }
-    ]
-  },
-  "com.apple.homescreenlayout": {
+    "// --- 一般 (General) ---": {},
+    "com.apple.webClip.managed": {
+        "name": "Webクリップ",
+        "description": "Webサイトへのショートカットをホーム画面に作成します。",
+        "fields": [
+            { "key": "Label", "label": "アイコンのラベル", "type": "text", "placeholder": "例: ChatGPT", "required": true },
+            { "key": "URL", "label": "WebサイトのURL", "type": "url", "placeholder": "https://chat.openai.com/", "required": true },
+            { "key": "IsRemovable", "label": "ユーザーによる削除を許可", "type": "checkbox", "checked": true },
+            { "key": "FullScreen", "label": "フルスクリーンで開く", "type": "checkbox" },
+            { "key": "Icon", "label": "アイコン画像 (PNG)", "type": "file", "isBase64": true }
+        ]
+    },
+    "com.apple.font": {
+        "name": "フォント",
+        "description": "カスタムフォント（.ttf または .otf）をデバイスにインストールします。",
+        "fields": [
+            { "key": "Name", "label": "フォント名 (システムでの表示名)", "type": "text", "placeholder": "例: My Cool Font", "required": true },
+            { "key": "Font", "label": "フォントファイル (.ttf, .otf)", "type": "file", "isBase64": true, "required": true }
+        ]
+    },
+
+    "// --- ユーザーエクスペリエンス (User Experience) ---": {},
+    "com.apple.wallpaper": {
+        "name": "壁紙",
+        "warning": "注意: この機能は「監視モード」のデバイスでのみ動作します。",
+        "description": "ホーム画面やロック画面の壁紙を設定します。",
+        "fields": [
+            { "key": "Image", "label": "壁紙画像 (JPG, PNG)", "type": "file", "isBase64": true, "required": true },
+            { "key": "Where", "label": "設定する場所", "type": "select", "options": ["Both", "Home Screen", "Lock Screen"] }
+        ]
+    },
+    "com.apple.homescreenlayout": {
       "name": "ホーム画面レイアウト",
-      "description": "ホーム画面のアイコン配置を定義します。上級者向け機能です。",
-      "warning": "このペイロードを含むプロファイルを削除すると、ホーム画面のレイアウトがリセットされることがあります。",
+      "warning": "注意: この機能は「監視モード」のデバイスでのみ動作します。",
+      "description": "ホーム画面のアイコン配置を定義します。Dockと各ページのアプリをjson形式で指定する上級者向け機能です。",
       "fields": [
-          { "key": "Dock", "label": "DockのアプリID (JSON配列)", "type": "textarea", "placeholder": "[\"com.apple.safari\", \"com.apple.mobilenotes\"]", "description": "Dockに固定するアプリのバンドルIDをJSON配列形式で入力します。" },
-          { "key": "Pages", "label": "各ページのアプリID (JSON配列の配列)", "type": "textarea", "placeholder": "[[\"com.apple.calculator\"], [\"com.apple.mobilecal\"]]", "description": "各ページに配置するアプリのバンドルIDを、ページの数だけ配列で指定します。" }
+          { "key": "Dock", "label": "Dockに配置するアプリのID (JSON配列)", "type": "textarea", "placeholder": "[\"com.apple.safari\", \"com.apple.mobilenotes\"]" },
+          { "key": "Pages", "label": "各ページに配置するアプリのID (JSON配列の配列)", "type": "textarea", "placeholder": "[[\"com.apple.calculator\"], [\"com.apple.mobilecal\"]]" }
       ]
-  },
-  "com.apple.lockscreen": {
-      "name": "ロック画面のメッセージ",
-      "description": "ロック画面に所有者情報などのメッセージを表示します。",
-      "fields": [
-          { "key": "LockScreenFootnote", "label": "フットノート (下部のテキスト)", "type": "text", "placeholder": "このiPadは〇〇の所有物です", "description": "「iPadを探す」がオンの場合に、ロック画面の下部に表示されます。" },
-          { "key": "AssetTagInformation", "label": "資産管理情報", "type": "text", "placeholder": "Property of My Family", "description": "「設定 > 一般 > 情報」に表示されるテキストです。" }
-      ]
-  },
-  "com.apple.font": {
-    "name": "フォント",
-    "description": "カスタムフォント（.ttf または .otf）をiPad/iPhoneにインストールします。",
-    "fields": [
-      { "key": "Name", "label": "フォント名 (システムでの表示名)", "type": "text", "placeholder": "例: My Cool Font", "required": true, "description": "フォントの正式名称。" },
-      { "key": "Font", "label": "フォントファイル (.ttf, .otf)", "type": "file", "isBase64": true, "required": true, "description": "インストールしたいフォントファイルを選択します。" }
-    ]
-  },
-  "com.apple.wifi.managed": {
-    "name": "Wi-Fi設定",
-    "description": "Wi-Fiの接続情報を自動で設定します。パスワード入力の手間が省けます。",
-    "fields": [
-      { "key": "PayloadDisplayName", "label": "設定名", "type": "text", "placeholder": "例: 自宅のWi-Fi", "required": true, "description": "プロファイル内でのこの設定の名前です。" },
-      { "key": "SSID_STR", "label": "Wi-Fi名 (SSID)", "type": "text", "placeholder": "例: MyHome-WiFi", "required": true, "description": "接続したいWi-Fiのネットワーク名。" },
-      { "key": "HIDDEN_NETWORK", "label": "ステルスネットワーク", "type": "checkbox", "description": "ネットワーク名が公開されていないWi-Fiの場合にチェックします。" },
-      { "key": "AutoJoin", "label": "自動接続する", "type": "checkbox", "checked": true, "description": "このWi-Fiの範囲内に入ったら自動で接続します。" },
-      { "key": "EncryptionType", "label": "暗号化の種類", "type": "select", "options": ["WPA3", "WPA2", "WPA", "WEP", "Any", "None"], "required": true, "description": "Wi-Fiのセキュリティ方式を選択します。" },
-      { "key": "Password", "label": "パスワード", "type": "text", "placeholder": "パスワードを入力", "description": "Wi-Fiのパスワード。暗号化がNoneの場合は不要です。" }
-    ]
-  },
-  "com.apple.webcontent-filter": {
-      "name": "Webコンテンツフィルタ",
-      "description": "Safariで表示できるWebサイトを制限します。アダルトサイトのブロックや、特定のサイトのみを許可する設定が可能です。",
-      "warning": "この設定は強力です。設定を間違えるとWebにアクセスできなくなる可能性があります。",
-      "fields": [
-          { "key": "FilterType", "label": "フィルタの種類", "type": "select", "options": ["BuiltIn", "Plugin"], "description": "'BuiltIn'はAppleの標準フィルタ、'Plugin'は特定のアプリを使います。" },
-          { "key": "AutoFilterEnabled", "label": "アダルトコンテンツを自動ブロック", "type": "checkbox", "checked": true, "description": "Appleの定義に基づいてアダルトサイトを自動的にブロックします。" },
-          { "key": "PermittedURLs", "label": "許可するURLリスト (JSON配列)", "type": "textarea", "placeholder": "[\"https://www.apple.com\", \"https://www.google.com\"]", "description": "ここに記載したURLは常にアクセスが許可されます。" },
-          { "key": "BlacklistedURLs", "label": "ブロックするURLリスト (JSON配列)", "type": "textarea", "placeholder": "[\"https://example.com\"]", "description": "ここに記載したURLへのアクセスをブロックします。" }
-      ]
-  },
-  "com.apple.dnsProxy.managed": {
-      "name": "DNSプロキシ",
-      "description": "DNSクエリを特定のプロキシアプリ経由で送信します。広告ブロックアプリなどで利用されます。",
-      "fields": [
-          { "key": "AppBundleIdentifier", "label": "アプリのバンドルID", "type": "text", "placeholder": "com.example.dnsapp", "required": true, "description": "DNSプロキシ機能を提供するアプリのバンドルIDです。" },
-          { "key": "ProviderBundleIdentifier", "label": "プロバイダのバンドルID", "type": "text", "placeholder": "com.example.dnsapp.dnsproxy", "required": true, "description": "アプリ内のDNSプロキシ拡張機能のバンドルIDです。" }
-      ]
-  },
-  "com.application.access": {
-    "name": "機能制限 (上級者向け)",
-    "description": "Appのインストールやカメラの使用などを制限/許可します。",
-    "warning": "MDMなどで既に制限がかかっている場合、この設定は効果がないか、競合する可能性があります。",
-    "fields": [
-      { "key": "allowAppInstallation", "label": "Appのインストールを許可", "type": "checkbox", "description": "App Storeやサイドローディングによるアプリのインストールを許可します。" },
-      { "key": "allowAppRemoval", "label": "Appの削除を許可", "type": "checkbox", "description": "ホーム画面からのアプリの削除を許可します。" },
-      { "key": "allowCamera", "label": "カメラの使用を許可", "type": "checkbox", "checked": true, "description": "チェックを外すとカメラが完全に無効化されます。" },
-      { "key": "allowScreenShot", "label": "スクリーンショットを許可", "type": "checkbox", "checked": true, "description": "チェックを外すとスクリーンショットが撮れなくなります。" },
-      { "key": "allowSafari", "label": "Safariの使用を許可", "type": "checkbox", "checked": true, "description": "チェックを外すとSafariのアイコンが非表示になります。" }
-    ]
-  }
+    },
+    "com.apple.lockscreen.managed": {
+        "name": "ロック画面メッセージ",
+        "warning": "注意: この機能は「監視モード」のデバイスでのみ動作します。",
+        "description": "ロック画面の下部に所有者情報などのメッセージを表示します。",
+        "fields": [
+            { "key": "LockScreenFootnote", "label": "画面下部のフッターメッセージ", "type": "text", "placeholder": "このiPadは〇〇の所有物です。" },
+            { "key": "AssetTagInformation", "label": "資産タグ情報 (所有者情報)", "type": "text", "placeholder": "Property of Taro Yamada" }
+        ]
+    },
+    "com.apple.notificationsettings": {
+        "name": "通知設定",
+        "description": "特定のアプリの通知を制御します。アプリのバンドルIDが必要です。",
+        "fields": [
+            { "key": "BundleIdentifier", "label": "対象アプリのバンドルID", "type": "text", "placeholder": "com.apple.news", "required": true },
+            { "key": "NotificationsEnabled", "label": "通知を許可", "type": "checkbox", "checked": true },
+            { "key": "ShowInNotificationCenter", "label": "通知センターに表示", "type": "checkbox", "checked": true },
+            { "key": "ShowInLockScreen", "label": "ロック画面に表示", "type": "checkbox", "checked": true },
+            { "key": "AlertType", "label": "通知スタイル", "type": "select", "options": ["None", "Banner", "Alert"] }
+        ]
+    },
+    "com.apple.SetupAssistant.managed": {
+        "name": "セットアップアシスタント",
+        "warning": "注意: デバイスの初期化後のセットアップ画面にのみ影響します。",
+        "description": "iPhone/iPadの初期セットアップ時に表示される項目をスキップします。",
+        "fields": [
+            { "key": "SkipAppearance", "label": "外観モード設定をスキップ", "type": "checkbox" },
+            { "key": "SkipTrueTone", "label": "True Tone設定をスキップ", "type": "checkbox" },
+            { "key": "SkipSiri", "label": "Siri設定をスキップ", "type": "checkbox" },
+            { "key": "SkipScreenTime", "label": "スクリーンタイム設定をスキップ", "type": "checkbox" }
+        ]
+    },
+
+    "// --- ネットワーク (Networking) ---": {},
+    "com.apple.wifi.managed": {
+        "name": "Wi-Fi設定",
+        "description": "Wi-Fiの接続情報を自動で設定します。",
+        "fields": [
+            { "key": "PayloadDisplayName", "label": "設定名", "type": "text", "placeholder": "自宅のWi-Fi", "required": true },
+            { "key": "SSID_STR", "label": "Wi-Fi名 (SSID)", "type": "text", "placeholder": "MyHome-WiFi", "required": true },
+            { "key": "HIDDEN_NETWORK", "label": "ステルスネットワーク", "type": "checkbox" },
+            { "key": "AutoJoin", "label": "自動接続する", "type": "checkbox", "checked": true },
+            { "key": "EncryptionType", "label": "暗号化の種類", "type": "select", "options": ["WPA3", "WPA2", "WPA", "WEP", "Any", "None"], "required": true },
+            { "key": "Password", "label": "パスワード", "type": "text", "placeholder": "パスワードを入力" }
+        ]
+    },
+    "com.apple.globalhttpproxy.managed": {
+        "name": "グローバルHTTPプロキシ",
+        "description": "デバイス全体のHTTP通信を指定したプロキシ経由にします。",
+        "fields": [
+            { "key": "ProxyType", "label": "プロキシタイプ", "type": "select", "options": ["Manual", "Auto"] },
+            { "key": "ProxyServer", "label": "プロキシサーバのアドレス", "type": "text", "placeholder": "proxy.example.com" },
+            { "key": "ProxyServerPort", "label": "ポート番号", "type": "number", "placeholder": "8080" }
+        ]
+    },
+    "com.apple.dnsSettings.managed": {
+        "name": "DNS設定",
+        "description": "DNSクエリの暗号化や特定のDNSサーバへの接続を設定します。",
+        "fields": [
+            { "key": "DNSSettings", "label": "DNS設定 (JSON形式)", "type": "textarea", "placeholder": "{\n  \"DNSProtocol\": \"HTTPS\",\n  \"ServerAddresses\": [\"1.1.1.1\", \"1.0.0.1\"]\n}" }
+        ]
+    },
+    
+    "// --- アカウント (Accounts) ---": {},
+    "com.apple.subscribedcalendar.account": {
+        "name": "カレンダーの照会",
+        "description": "インターネットで公開されているカレンダーを登録します。",
+        "fields": [
+            { "key": "SubCalAccountDescription", "label": "カレンダーの説明", "type": "text", "placeholder": "日本の祝日", "required": true },
+            { "key": "SubCalAccountHostName", "label": "カレンダーのURL (.ics)", "type": "url", "placeholder": "https://example.com/calendar.ics", "required": true }
+        ]
+    },
+    "com.apple.mail.managed": {
+        "name": "メールアカウント",
+        "description": "メールアカウント（IMAP/POP）を自動で設定します。",
+        "fields": [
+            { "key": "EmailAccountDescription", "label": "アカウントの説明", "type": "text", "placeholder": "Gmail", "required": true },
+            { "key": "EmailAddress", "label": "メールアドレス", "type": "text", "placeholder": "user@example.com", "required": true },
+            { "key": "IncomingMailServerHostName", "label": "受信サーバ (IMAP/POP)", "type": "text", "placeholder": "imap.gmail.com" },
+            { "key": "OutgoingMailServerHostName", "label": "送信サーバ (SMTP)", "type": "text", "placeholder": "smtp.gmail.com" }
+        ]
+    },
+
+    "// --- 制限 (Restrictions) ---": {},
+    "com.apple.applicationaccess": {
+        "name": "アプリの制限 (簡易)",
+        "warning": "より詳細な制限は「全般的な制限」を使用してください。",
+        "description": "Appのインストールや削除などを制限/許可します。",
+        "fields": [
+            { "key": "allowAppInstallation", "label": "Appのインストールを許可", "type": "checkbox" },
+            { "key": "allowAppRemoval", "label": "Appの削除を許可", "type": "checkbox" }
+        ]
+    },
+    "com.apple.restrictions.managed": {
+        "name": "全般的な制限 (上級者向け)",
+        "warning": "注意: 監視モードでのみ有効な項目が多く含まれます。設定は慎重に行ってください。",
+        "description": "デバイスの機能を包括的に制限します。非常に多くの項目があります。",
+        "fields": [
+            { "key": "allowAirDrop", "label": "AirDropを許可", "type": "checkbox", "checked": true },
+            { "key": "allowAddingGameCenterFriends", "label": "Game Centerで友達追加を許可", "type": "checkbox", "checked": true },
+            { "key": "allowCamera", "label": "カメラの使用を許可", "type": "checkbox", "checked": true },
+            { "key": "allowScreenShot", "label": "スクリーンショットを許可", "type": "checkbox", "checked": true },
+            { "key": "allowSafari", "label": "Safariの使用を許可", "type": "checkbox", "checked": true },
+            { "key": "allowExplicitContent", "label": "不適切な内容のコンテンツを許可", "type": "checkbox", "checked": true },
+            { "key": "allowPairedWatch", "label": "Apple Watchとのペアリングを許可", "type": "checkbox", "checked": true }
+        ]
+    }
 }
